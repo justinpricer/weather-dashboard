@@ -1,6 +1,6 @@
 let city = $("#searchTerm").val();
 // store api key
-const apiKey = "&appid=afaa8eea1769b4359fd8e07b2efcefbd";
+const apiKey = "&appid=9da89054da6d41557f97c951a06d5e16";
 
 let date = new Date();
 
