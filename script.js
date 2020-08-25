@@ -1,3 +1,4 @@
+// store the value of the input
 let city = $("#searchTerm").val();
 // store api key
 const apiKey = "&appid=9da89054da6d41557f97c951a06d5e16";
@@ -23,7 +24,7 @@ $("#searchBtn").on("click", function() {
   $("#searchTerm").val("");  
 
   // full url to call api
-  const queryUrl = "api.openweathermap.org/data/2.5/weather?q={city name}&appid={9da89054da6d41557f97c951a06d5e16};
+  const queryUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + apiKey;
 
   $.ajax({
     url: queryUrl,
@@ -84,7 +85,7 @@ $("#searchBtn").on("click", function() {
 function getCurrentForecast () {
   
   $.ajax({
-    url: "api.openweathermap.org/data/2.5/weather?q={city name}&appid={9da89054da6d41557f97c951a06d5e16}",
+    url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + apiKey,
     method: "GET"
   }).then(function (response){
 
@@ -96,7 +97,9 @@ function getCurrentForecast () {
     let results = response.list;
     console.log(results)
     
-   
+    //declare start date to check against
+    // startDate = 20
+    //have end date, endDate = startDate + 5
 
     for (let i = 0; i < results.length; i++) {
 
@@ -107,7 +110,7 @@ function getCurrentForecast () {
 
       if(results[i].dt_txt.indexOf("12:00:00") !== -1){
         
-        
+        // get the temperature and convert to fahrenheit 
         let temp = (results[i].main.temp - 273.15) * 1.80 + 32;
         let tempF = Math.floor(temp);
 
@@ -117,7 +120,7 @@ function getCurrentForecast () {
         const temperature = $("<p>").addClass("card-text forecastTemp").text("Temperature: " + tempF + " °F");
         const humidity = $("<p>").addClass("card-text forecastHumidity").text("Humidity: " + results[i].main.humidity + "%");
 
-        
+        const image = $("<img>").attr("src", "https://openweathermap.org/img/w/" + results[i].weather[0].icon + ".png")
 
         cardBody.append(cityDate, image, temperature, humidity);
         card.append(cardBody);
